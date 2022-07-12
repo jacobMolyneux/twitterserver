@@ -1,4 +1,19 @@
-exports.create_account = function(req, res, next){
+const User = require('../models/userModels')
+
+exports.create_account = (req, res, next) => {
+    const user = new User({
+        username: req.body.username,
+        password: req.body.password
+    })
+    user.save(function(err) {
+        if (err){
+            return next(err)
+        }
+        else {
+            res.status(200)
+            res.json(`new user created : username: ${req.body.username}`)
+        }
+    })
     
 }
 
